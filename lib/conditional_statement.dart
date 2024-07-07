@@ -34,7 +34,7 @@ class _HomeState extends State<Home> {
     final data = queryResult.data;
     if (data != null) {
       final result = CountryData.fromJson(data);
-      print(result);
+      //print(result);
       setState(() {
         model = result;
         _isLoading = false;
@@ -42,8 +42,6 @@ class _HomeState extends State<Home> {
     } else {
       // Show error message
     }
-
-
 
     //print(queryResult);
     //print(model.runtimeType);
@@ -63,31 +61,29 @@ class _HomeState extends State<Home> {
         ),
         backgroundColor: Colors.blue,
       ),
-      body:
-      // body: Center(child: ElevatedButton(child: Text('fetch data'),onPressed: fetchData,)),
-      _isLoading
+      body: _isLoading
           ? const Center(child: CircularProgressIndicator())
           : model?.countries == null
-          ? Center(
-          child: ElevatedButton(
-            onPressed: () {
-              fetchData();
-              //print("on pressed List : $countries");
-            },
-            child: const Text('Fetch Data'),
-          ))
-          : ListView.builder(
-        shrinkWrap: true,
-        padding: EdgeInsets.all(8),
-        itemCount: model?.countries.length,
-        itemBuilder: (context, index) {
-          final country = model?.countries[index];
-          return ListTile(
-            title: Text(country?.name ?? ''),
-            subtitle: Text(country?.code ?? ''),
-          );
-        },
-      ),
+              ? Center(
+                  child: ElevatedButton(
+                  onPressed: () {
+                    fetchData();
+                    //print("on pressed List : $countries");
+                  },
+                  child: const Text('Fetch Data'),
+                ))
+              : ListView.builder(
+                  shrinkWrap: true,
+                  padding: const EdgeInsets.all(8),
+                  itemCount: model?.countries.length,
+                  itemBuilder: (context, index) {
+                    final country = model?.countries[index];
+                    return ListTile(
+                      title: Text(country?.name ?? ''),
+                      subtitle: Text(country?.code ?? ''),
+                    );
+                  },
+                ),
     );
   }
 }
